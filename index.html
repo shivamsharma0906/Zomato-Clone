@@ -3,28 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zomato - Order Food Online</title>
+  <title>Zomato - Order Food Online | Food Delivery & Dining</title>
+  <meta name="description" content="Order food online from your favorite restaurants. Zomato offers fast delivery, exclusive deals, and a wide variety of cuisines.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Edu+TAS+Beginner:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Debug: Confirm CSS is loading */
-    body {
-      background-color: lightblue !important;
-      margin: 0;
-      padding: 0;
-    }
-
     /* Reset and Root Variables */
     :root {
       --primary: #e23744;
-      --primary-dark: #a3202d;
+      --primary-dark: #cb202d;
+      --primary-light: #ff4d5a;
       --secondary: #2d2d2d;
       --light: #f8f8f8;
-      --dark: #222;
-      --gray: #555;
+      --dark: #1c1c1c;
+      --gray: #696969;
+      --light-gray: #9c9c9c;
+      --border: #e8e8e8;
+      --success: #48c479;
+      --warning: #ffba08;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow-hover: rgba(0, 0, 0, 0.15);
       --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --transition-smooth: all 0.3s ease;
     }
 
     * {
@@ -33,10 +35,34 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
       color: var(--secondary);
       overflow-x: hidden;
+      background: white;
+      line-height: 1.6;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--light);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-dark);
     }
 
     /* Header Styles */
@@ -44,96 +70,192 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: rgba(0,0,0,0.8);
-      padding: 15px 20px;
+      background-color: rgba(255, 255, 255, 0.98);
+      padding: 18px 30px;
       position: fixed;
       width: 100%;
       top: 0;
       z-index: 1000;
-      transition: var(--transition);
+      transition: var(--transition-smooth);
+      box-shadow: 0 2px 20px var(--shadow);
       backdrop-filter: blur(10px);
     }
 
     header.scrolled {
-      padding: 10px 20px;
-      background-color: rgba(0,0,0,0.9);
+      padding: 12px 30px;
+      box-shadow: 0 4px 30px var(--shadow-hover);
+      background-color: rgba(255, 255, 255, 1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
     }
 
     .logo img {
-      height: 30px;
-      filter: brightness(0) invert(1);
+      height: 38px;
       transition: var(--transition);
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    .logo span {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
 
     .nav-links {
       display: none;
+      list-style: none;
     }
 
     .nav-links.active {
       display: flex;
       flex-direction: column;
       position: absolute;
-      top: 60px;
+      top: 75px;
       left: 0;
       width: 100%;
-      background-color: rgba(0,0,0,0.9);
-      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      padding: 25px;
+      box-shadow: 0 8px 30px var(--shadow-hover);
+      animation: slideDown 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .nav-links li {
-      margin: 10px 0;
+      margin: 12px 0;
     }
 
     .nav-links li a {
       text-decoration: none;
-      color: white;
-      font-weight: 500;
-      font-size: 1rem;
-      display: block;
-      padding: 10px;
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      transition: var(--transition-smooth);
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .nav-links li a::after {
+    .nav-links li a::before {
       content: '';
       position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -5px;
-      left: 0;
-      background-color: white;
-      transition: var(--transition);
-    }
-
-    .nav-links li a:hover::after {
+      top: 0;
+      left: -100%;
       width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(226, 55, 68, 0.1), transparent);
+      transition: var(--transition-smooth);
     }
 
-    .download-app {
-      background-color: var(--primary);
-      padding: 8px 15px;
-      border-radius: 5px;
-      margin-left: 10px;
+    .nav-links li a:hover::before {
+      left: 100%;
+    }
+
+    .nav-links li a:hover {
+      background: linear-gradient(135deg, #fef5f6 0%, #ffffff 100%);
+      color: var(--primary);
+      transform: translateX(8px);
+    }
+
+    .nav-links li a i {
+      font-size: 1.2rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
       transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(226, 55, 68, 0.35);
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      position: relative;
+      overflow: hidden;
     }
 
-    .download-app:hover {
-      background-color: var(--primary-dark);
-      transform: translateY(-2px);
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-primary:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(226, 55, 68, 0.5);
     }
 
     .menu-toggle {
       display: block;
-      font-size: 1.5rem;
-      color: white;
+      font-size: 1.6rem;
+      color: var(--secondary);
       background: none;
       border: none;
       cursor: pointer;
+      transition: var(--transition-smooth);
+      padding: 8px;
     }
 
-    /* Hero Section with Video Background */
+    .menu-toggle:hover {
+      color: var(--primary);
+      transform: scale(1.15);
+    }
+
+    /* Hero Section */
     .hero {
       position: relative;
       height: 100vh;
+      min-height: 650px;
       overflow: hidden;
       color: white;
       text-align: center;
@@ -141,428 +263,1451 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+      margin-top: 75px;
     }
 
     .hero-video {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      z-index: 0;
       object-fit: cover;
-      z-index: -1;
+      filter: brightness(0.9);
     }
 
-    .hero-video img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .hero-overlay {
       position: absolute;
       top: 0;
       left: 0;
-      z-index: -1;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(226, 55, 68, 0.4) 50%, rgba(0, 0, 0, 0.5) 100%);
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+      z-index: 1;
     }
 
     .hero-content {
       position: relative;
-      z-index: 1;
-      padding: 20px;
-      max-width: 100%;
+      z-index: 2;
+      padding: 30px;
+      max-width: 950px;
+      animation: fadeInUp 1s ease;
     }
 
     .hero h1 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      font-weight: 700;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 900;
+      text-shadow: 3px 5px 15px rgba(0,0,0,0.6);
+      letter-spacing: -1.5px;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #ffffff 0%, #ffecee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero .subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-size: 1.4rem;
+      margin-bottom: 35px;
+      font-weight: 400;
+      text-shadow: 2px 3px 8px rgba(0,0,0,0.5);
+      line-height: 1.9;
+      text-align: center;
+      opacity: 0.95;
     }
 
-    .search-bar {
+    .search-container {
+      background: white;
+      padding: 10px;
+      border-radius: 60px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.4);
       display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
+      max-width: 550px;
+      margin: 0 auto 40px;
+      animation: scaleIn 0.5s ease 0.3s both;
+      border: 3px solid rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .search-input {
-      padding: 10px;
-      width: 200px;
+      flex: 1;
+      padding: 16px 24px;
       border: none;
-      border-radius: 25px 0 0 25px;
-      font-size: 1rem;
+      border-radius: 60px;
+      font-size: 1.05rem;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+
+    .search-input::placeholder {
+      color: var(--light-gray);
     }
 
     .search-button {
-      padding: 10px;
-      background-color: var(--primary);
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: white;
       border: none;
-      border-radius: 0 25px 25px 0;
+      border-radius: 60px;
       cursor: pointer;
       transition: var(--transition);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      box-shadow: 0 5px 20px rgba(226, 55, 68, 0.4);
     }
 
     .search-button:hover {
-      background-color: var(--primary-dark);
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(226, 55, 68, 0.6);
     }
 
     .download-buttons-hero {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 30px;
+      gap: 18px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.5s both;
     }
 
     .download-btn-hero {
       display: flex;
       align-items: center;
-      padding: 10px 15px;
-      background: #000;
+      gap: 12px;
+      padding: 15px 30px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
       color: white;
       text-decoration: none;
-      border-radius: 25px;
-      font-weight: 600;
-      font-size: 0.9rem;
+      border-radius: 15px;
+      font-weight: 700;
+      font-size: 0.95rem;
       transition: var(--transition);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
     .download-btn-hero:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      background: white;
+      color: var(--primary);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+      border-color: white;
     }
 
     .download-btn-hero i {
-      font-size: 1.2rem;
-      margin-right: 5px;
+      font-size: 1.8rem;
+      transition: var(--transition);
+    }
+
+    .download-btn-hero:hover i {
+      transform: scale(1.15);
+    }
+
+    .download-btn-hero .btn-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .download-btn-hero .btn-text small {
+      font-size: 0.75rem;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    .download-btn-hero .btn-text span {
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      z-index: 1;
+      animation: float 6s ease-in-out infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      33% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+      66% {
+        transform: translateY(-10px) rotate(-5deg);
+      }
+    }
+
+    .floating-element:nth-child(1) {
+      top: 15%;
+      left: 10%;
+      font-size: 3rem;
+      animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+      top: 25%;
+      right: 15%;
+      font-size: 2.5rem;
+      animation-delay: 1s;
+    }
+
+    .floating-element:nth-child(3) {
+      bottom: 20%;
+      left: 15%;
+      font-size: 2rem;
+      animation-delay: 2s;
+    }
+
+    .floating-element:nth-child(4) {
+      bottom: 25%;
+      right: 10%;
+      font-size: 3.5rem;
+      animation-delay: 1.5s;
     }
 
     /* Stats Section */
     .stats {
-      padding: 40px 10px;
-      background: white;
+      padding: 100px 20px;
+      background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: relative;
     }
 
-    .stats h2 {
-      font-size: 1.8rem;
-      color: var(--primary);
-      margin-bottom: 30px;
+    .section-header {
+      margin-bottom: 60px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 18px;
+      font-weight: 800;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 10px;
+    }
+
+    .section-header p {
+      font-size: 1.15rem;
+      color: var(--gray);
+      max-width: 750px;
+      margin: 20px auto 0;
+      line-height: 1.9;
+    }
+
+    .brand-showcase {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 50px;
+      background: linear-gradient(135deg, #fef5f6 0%, #ffffff 100%);
+      border-radius: 30px;
+      box-shadow: 0 15px 50px var(--shadow-hover);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-showcase::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(226, 55, 68, 0.05) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .brand-logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 35px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-logo-main {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+      transition: var(--transition);
+      filter: drop-shadow(0 8px 20px rgba(226, 55, 68, 0.3));
+      cursor: pointer;
+    }
+
+    .brand-logo-main:hover {
+      transform: scale(1.08) rotate(2deg);
+      filter: drop-shadow(0 15px 35px rgba(226, 55, 68, 0.6));
     }
 
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
-      max-width: 100%;
+      gap: 35px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
     .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: white;
+      padding: 50px 30px;
+      border-radius: 25px;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 8px 30px var(--shadow);
+      position: relative;
+      overflow: hidden;
     }
 
-    .stat-number {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
+    .stat-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(226, 55, 68, 0.05), transparent);
+      transition: var(--transition-smooth);
     }
 
-    .stat-label {
-      font-size: 0.9rem;
-      color: var(--gray);
-      margin-top: 5px;
+    .stat-item:hover::before {
+      left: 100%;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 20px 60px var(--shadow-hover);
+      background: linear-gradient(135deg, #fef5f6 0%, #ffffff 100%);
     }
 
     .stat-icon {
-      font-size: 1.5rem;
-      color: var(--primary);
-      margin-bottom: 5px;
-    }
-
-    /* App Features Section with Phone Mockup */
-    .app-features {
-      padding: 40px 10px;
-      background: #fdf2f2;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .app-features h2 {
-      font-size: 1.8rem;
+      font-size: 3.5rem;
       color: var(--primary);
       margin-bottom: 20px;
+      display: inline-block;
+      transition: var(--transition);
     }
 
-    .app-features p {
-      font-size: 1rem;
+    .stat-item:hover .stat-icon {
+      transform: scale(1.3) rotate(15deg);
+      color: var(--primary-dark);
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
       color: var(--gray);
+      font-weight: 600;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #fef5f6 0%, #ffffff 50%, #e6f0fa 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .services::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.3" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+      background-size: cover;
+      opacity: 0.5;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 60px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-card {
+      background: white;
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 10px 40px var(--shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+      transform: scaleX(0);
+      transition: var(--transition);
+      transform-origin: left;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(226, 55, 68, 0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: var(--transition);
+    }
+
+    .service-card:hover::after {
+      width: 400px;
+      height: 400px;
+    }
+
+    .service-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 60px var(--shadow-hover);
+    }
+
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service-icon {
+      width: 85px;
+      height: 85px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+      font-size: 2.5rem;
+      color: white;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(226, 55, 68, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-card:hover .service-icon {
+      transform: rotateY(360deg) scale(1.1);
+      box-shadow: 0 15px 40px rgba(226, 55, 68, 0.5);
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      color: var(--secondary);
+      margin-bottom: 15px;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-card p {
+      color: var(--gray);
+      font-size: 1rem;
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* App Features Section */
+    .app-features {
+      padding: 100px 20px;
+      background: white;
+      text-align: center;
+    }
+
+    .featured-food-banner {
+      max-width: 1200px;
+      margin: 60px auto;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px var(--shadow-hover);
+      position: relative;
+    }
+
+    .food-image-wrapper {
+      position: relative;
+      height: 450px;
+      overflow: hidden;
+    }
+
+    .featured-food-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+      filter: brightness(0.95);
+    }
+
+    .food-image-wrapper:hover .featured-food-img {
+      transform: scale(1.1);
+      filter: brightness(1);
+    }
+
+    .food-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(226, 55, 68, 0.92) 0%, rgba(28, 28, 28, 0.92) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      color: white;
+    }
+
+    .food-overlay h3 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 900;
+      text-shadow: 3px 3px 15px rgba(0,0,0,0.4);
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .food-overlay p {
+      font-size: 1.3rem;
       margin-bottom: 30px;
-      max-width: 100%;
+      max-width: 650px;
+      opacity: 0.98;
+      line-height: 1.7;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .food-overlay .btn-primary {
+      font-size: 1.15rem;
+      padding: 18px 45px;
+      animation: fadeInUp 0.8s ease 0.4s both;
     }
 
     .features-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      max-width: 100%;
-      margin: 0 auto 30px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      max-width: 1100px;
+      margin: 60px auto;
     }
 
     .feature-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+      padding: 35px 20px;
+      border-radius: 20px;
+      transition: var(--transition);
+      cursor: pointer;
+      box-shadow: 0 5px 20px var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(226, 55, 68, 0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: var(--transition);
+    }
+
+    .feature-item:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .feature-item:hover {
+      background: white;
+      box-shadow: 0 15px 45px var(--shadow-hover);
+      transform: translateY(-8px);
     }
 
     .feature-icon {
-      width: 60px;
-      height: 60px;
-      background: white;
-      border-radius: 15px;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px;
-      font-size: 1.2rem;
-      color: var(--primary);
+      margin: 0 auto 18px;
+      font-size: 1.8rem;
+      color: white;
+      transition: var(--transition);
+      box-shadow: 0 8px 25px rgba(226, 55, 68, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-item:hover .feature-icon {
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 12px 35px rgba(226, 55, 68, 0.5);
     }
 
     .feature-label {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--secondary);
-      font-size: 0.9rem;
+      font-size: 1rem;
+      position: relative;
+      z-index: 1;
     }
 
     .phone-mockup-container {
       position: relative;
       text-align: center;
-      padding: 20px;
-      background-color: #e6f0fa;
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #fef5f6 0%, #e6f0fa 100%);
+      margin-top: 60px;
+      border-radius: 35px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      box-shadow: inset 0 0 100px rgba(226, 55, 68, 0.1);
     }
 
     .phone-mockup {
       display: inline-block;
-      max-width: 250px;
+      max-width: 300px;
       width: 100%;
-      height: auto;
       position: relative;
       z-index: 2;
+      animation: float 4s ease-in-out infinite;
+      transition: var(--transition);
+    }
+
+    .phone-mockup:hover {
+      transform: scale(1.05);
+    }
+
+    .phone-mockup.secondary {
+      animation-delay: 1s;
+      max-width: 270px;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-25px);
+      }
     }
 
     .phone-mockup img {
       width: 100%;
       height: auto;
       display: block;
+      filter: drop-shadow(0 25px 50px rgba(0,0,0,0.4));
     }
 
     .red-circle {
       position: absolute;
-      width: 300px;
-      height: 300px;
-      background-color: #e23744;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, var(--primary) 0%, var(--primary-dark) 100%);
       border-radius: 50%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 1;
-      filter: blur(10px);
+      opacity: 0.25;
+      filter: blur(80px);
+      animation: pulse 5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.25;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 0.35;
+      }
+    }
+
+    /* Testimonials Section */
+    .testimonials {
+      padding: 100px 20px;
+      background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 60px auto 0;
+    }
+
+    .testimonial-card {
+      background: white;
+      padding: 40px;
+      border-radius: 25px;
+      box-shadow: 0 10px 40px var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      font-size: 6rem;
+      color: var(--primary);
+      opacity: 0.08;
+      font-family: Georgia, serif;
+      font-weight: bold;
+    }
+
+    .testimonial-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+
+    .testimonial-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px var(--shadow-hover);
+    }
+
+    .testimonial-text {
+      color: var(--gray);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      margin-bottom: 25px;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .author-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 1.4rem;
+      box-shadow: 0 8px 25px rgba(226, 55, 68, 0.3);
+      transition: var(--transition);
+    }
+
+    .testimonial-card:hover .author-avatar {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 12px 35px rgba(226, 55, 68, 0.5);
+    }
+
+    .author-info h4 {
+      color: var(--secondary);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .author-info p {
+      color: var(--light-gray);
+      font-size: 0.9rem;
+    }
+
+    .rating {
+      color: var(--warning);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .rating i {
+      margin-right: 2px;
     }
 
     /* Popular Cities Section */
     .popular-cities {
-      padding: 40px 10px;
-      background: var(--light);
+      padding: 100px 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #fef5f6 100%);
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .popular-cities h2 {
-      font-size: 1.8rem;
-      color: var(--primary);
-      margin-bottom: 30px;
     }
 
     .cities-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      max-width: 100%;
-      margin: 0 auto;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 1200px;
+      margin: 60px auto 0;
     }
 
     .city-item {
       background: white;
-      padding: 15px;
-      border-radius: 10px;
+      padding: 35px 25px;
+      border-radius: 18px;
+      transition: var(--transition);
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--secondary);
+      font-size: 1.05rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 5px 20px var(--shadow);
+    }
+
+    .city-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      opacity: 0;
       transition: var(--transition);
     }
 
+    .city-item span {
+      position: relative;
+      z-index: 1;
+      transition: var(--transition);
+    }
+
+    .city-item::after {
+      content: '→';
+      position: absolute;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%) translateX(30px);
+      opacity: 0;
+      transition: var(--transition);
+      font-size: 1.5rem;
+      z-index: 1;
+      color: white;
+    }
+
     .city-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 15px 45px var(--shadow-hover);
+      color: white;
+    }
+
+    .city-item:hover::before {
+      opacity: 1;
+    }
+
+    .city-item:hover::after {
+      opacity: 1;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 100px 20px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+      background-size: cover;
+    }
+
+    .cta-content {
+      max-width: 750px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section h2 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      font-weight: 900;
+      text-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .cta-section p {
+      font-size: 1.25rem;
+      margin-bottom: 40px;
+      opacity: 0.98;
+      line-height: 1.8;
+      text-shadow: 1px 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      background: white;
+      color: var(--primary);
+      padding: 18px 40px;
+      border-radius: 60px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: var(--transition);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.05rem;
+    }
+
+    .btn-white:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, #ffffff 0%, #ffecee 100%);
     }
 
     /* Footer */
     footer {
       background: var(--dark);
       color: var(--light);
-      padding: 20px 10px;
-      text-align: center;
+      padding: 80px 20px 30px;
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
     }
 
     .footer-content {
-      max-width: 100%;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
     }
 
-    .footer-links a {
-      color: var(--light);
+    .footer-section h3 {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      color: white;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 12px;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 5px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 15px;
+    }
+
+    .footer-section ul li a {
+      color: var(--light-gray);
       text-decoration: none;
-      font-size: 0.8rem;
-      transition: var(--transition);
+      transition: var(--transition-smooth);
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .footer-links a:hover {
+    .footer-section ul li a i {
+      font-size: 0.8rem;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-section ul li a:hover {
       color: var(--primary);
+      transform: translateX(8px);
+    }
+
+    .footer-section ul li a:hover i {
+      transform: translateX(5px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .social-links a {
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+      font-size: 1.2rem;
+    }
+
+    .social-links a:hover {
+      background: var(--primary);
+      transform: translateY(-5px) rotate(10deg);
+      box-shadow: 0 10px 30px rgba(226, 55, 68, 0.5);
     }
 
     .footer-bottom {
-      font-size: 0.7rem;
-      opacity: 0.7;
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--light-gray);
+      font-size: 0.95rem;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 35px;
+      right: 35px;
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 8px 30px rgba(226, 55, 68, 0.5);
+      transition: var(--transition);
+      z-index: 999;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 15px 45px rgba(226, 55, 68, 0.7);
     }
 
     /* Animations */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .animate .section-header h2,
-    .animate .section-header p,
-    .animate .stat-item,
-    .animate .feature-item,
     .fade-in {
       animation: fadeInUp 0.8s ease-out forwards;
     }
 
-    /* Responsive */
+    /* Loading Animation */
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+
+    /* Responsive Design */
     @media (min-width: 768px) {
       header {
-        padding: 15px 50px;
+        padding: 20px 60px;
       }
+
       header.scrolled {
-        padding: 10px 50px;
+        padding: 15px 60px;
       }
+
       .logo img {
-        height: 40px;
+        height: 42px;
       }
+
+      .logo span {
+        display: inline;
+        font-size: 2rem;
+      }
+
       .nav-links {
         display: flex;
-        gap: 30px;
-      }
-      .nav-links.active {
-        display: flex;
+        gap: 35px;
         flex-direction: row;
         position: static;
         width: auto;
         background: none;
         padding: 0;
+        box-shadow: none;
       }
+
+      .nav-links.active {
+        flex-direction: row;
+        position: static;
+        box-shadow: none;
+      }
+
+      .nav-links li {
+        margin: 0;
+      }
+
+      .nav-links li a {
+        padding: 10px 18px;
+      }
+
       .menu-toggle {
         display: none;
       }
-      .hero h1 { font-size: 3rem; }
-      .hero .subtitle { font-size: 1.5rem; }
-      .hero .description { font-size: 1.2rem; }
-      .search-input { width: 300px; }
-      .download-buttons-hero { gap: 20px; }
-      .download-btn-hero { padding: 15px 25px; font-size: 1rem; }
-      .download-btn-hero i { font-size: 1.5rem; }
-      .stats h2 { font-size: 2.5rem; }
-      .stats-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-      .stat-number { font-size: 2.5rem; }
-      .stat-label { font-size: 1rem; }
-      .stat-icon { font-size: 2rem; }
-      .app-features h2 { font-size: 2.5rem; }
-      .app-features p { font-size: 1.2rem; }
-      .features-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-      .feature-icon { width: 80px; height: 80px; font-size: 1.5rem; }
-      .feature-label { font-size: 1rem; }
-      .popular-cities h2 { font-size: 2.5rem; }
-      .cities-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-      .city-item { padding: 20px; }
-      footer { padding: 40px 20px; }
-      .footer-links { gap: 20px; }
-      .footer-links a { font-size: 0.9rem; }
-      .footer-bottom { font-size: 0.8rem; }
-      .phone-mockup { max-width: 400px; }
-      .red-circle { width: 500px; height: 500px; }
+
+      .hero {
+        margin-top: 0;
+      }
+
+      .hero h1 {
+        font-size: 4rem;
+      }
+
+      .hero .subtitle {
+        font-size: 1.6rem;
+      }
+
+      .search-container {
+        max-width: 650px;
+      }
+
+      .section-header h2 {
+        font-size: 3rem;
+      }
+
+      .section-header p {
+        font-size: 1.25rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cities-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .phone-mockup {
+        max-width: 380px;
+      }
+
+      .phone-mockup.secondary {
+        max-width: 330px;
+      }
+
+      .red-circle {
+        width: 650px;
+        height: 650px;
+      }
+
+      .cta-section h2 {
+        font-size: 3.2rem;
+      }
+
+      .food-image-wrapper {
+        height: 550px;
+      }
+
+      .food-overlay h3 {
+        font-size: 3.5rem;
+      }
+
+      .food-overlay p {
+        font-size: 1.4rem;
+      }
+
+      .brand-logo-main {
+        max-width: 450px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .cities-grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .phone-mockup-container {
+        flex-wrap: nowrap;
+      }
+
+      .brand-logo-main {
+        max-width: 500px;
+      }
     }
 
     @media (max-width: 480px) {
-      .phone-mockup { max-width: 200px; }
-      .red-circle { width: 250px; height: 250px; }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero .subtitle {
+        font-size: 1.1rem;
+      }
+
+      .food-overlay h3 {
+        font-size: 2rem;
+      }
+
+      .food-overlay p {
+        font-size: 1rem;
+      }
+
+      .phone-mockup {
+        max-width: 220px;
+      }
+
+      .phone-mockup.secondary {
+        max-width: 200px;
+      }
+
+      .food-image-wrapper {
+        height: 320px;
+      }
+
+      .brand-logo-main {
+        max-width: 220px;
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+      }
+
+      .cta-section h2 {
+        font-size: 2.2rem;
+      }
+
+      .stat-number {
+        font-size: 2.2rem;
+      }
+
+      .stat-icon {
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- <header id="main-header">
+  <header id="main-header">
     <div class="logo">
-      <img src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png" alt="Zomato Logo">
+      <img src="logo.png" alt="Zomato Logo">
+      <span>zomato</span>
     </div>
-    <button class="menu-toggle"><i class="fas fa-bars"></i></button>
-    <ul class="nav-links">
-      <li><a href="#download-app" class="download-app"><i class="fas fa-mobile-alt"></i> Download App</a></li>
-    </ul>
-  </header> -->
+    <div class="nav-container">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#services"><i class="fas fa-concierge-bell"></i> Services</a></li>
+        <li><a href="#features"><i class="fas fa-star"></i> Features</a></li>
+        <li><a href="#cities"><i class="fas fa-map-marked-alt"></i> Cities</a></li>
+        <li><a href="#testimonials"><i class="fas fa-comments"></i> Reviews</a></li>
+        <li><a href="#download-app" class="btn-primary"><i class="fas fa-mobile-alt"></i> Download App</a></li>
+      </ul>
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
 
   <main>
-    <!-- Hero Section with Video Background and Fallback -->
+    <!-- Hero Section with Video Background -->
     <section class="hero">
       <video autoplay loop muted playsinline class="hero-video">
         <source src="zomato.mp4" type="video/mp4">
-        <img src="https://via.placeholder.com/1920x1080" alt="Fallback Image">
         Your browser does not support the video tag.
       </video>
+      <div class="hero-overlay"></div>
+      
+      <!-- Floating Food Icons -->
+      <div class="floating-element"><i class="fas fa-pizza-slice"></i></div>
+      <div class="floating-element"><i class="fas fa-hamburger"></i></div>
+      <div class="floating-element"><i class="fas fa-ice-cream"></i></div>
+      <div class="floating-element"><i class="fas fa-cookie-bite"></i></div>
+      
       <div class="hero-content">
-        <h1>Zomato</h1>
-        <h1>India's #1 Food Delivery App</h1>
+        <h1><span>Order Food Online</span></h1>
         <p class="subtitle">
-            Experience fast & easy online ordering<br>
-            on the Zomato app
+          Discover the best restaurants near you.<br>
+          Fresh, fast & delivered to your doorstep in minutes.
         </p>
+        <div class="search-container">
+          <input type="text" class="search-input" placeholder="Enter your delivery location">
+          <button class="search-button">
+            <i class="fas fa-search"></i>
+            <span>Find Food</span>
+          </button>
+        </div>
         <div class="download-buttons-hero">
           <a href="https://play.google.com/store/search?q=zomato&c=apps" class="download-btn-hero" target="_blank">
             <i class="fab fa-google-play"></i>
-            <span>Get it on<br>Google Play</span>
+            <div class="btn-text">
+              <small>Get it on</small>
+              <span>Google Play</span>
+            </div>
           </a>
           <a href="https://apps.apple.com/in/app/zomato-food-delivery-dining/id434613896" class="download-btn-hero" target="_blank">
             <i class="fab fa-apple"></i>
-            <span>Download on the<br>App Store</span>
+            <div class="btn-text">
+              <small>Download on the</small>
+              <span>App Store</span>
+            </div>
           </a>
         </div>
       </div>
@@ -570,31 +1715,87 @@
 
     <!-- Stats Section -->
     <section class="stats">
-      <h2>Better Food for More People</h2>
-      <p>For over a decade, we've enabled our customers to discover new tastes, delivered right to their doorstep</p>
+      <div class="section-header">
+        <h2>Better Food for More People</h2>
+        <p>For over a decade, we've enabled our customers to discover new tastes and enjoy seamless food delivery experiences across India</p>
+      </div>
+
+      <!-- Brand Showcase -->
+      <div class="brand-showcase">
+        <div class="brand-logo-container">
+          <img src="logo2.png" alt="Zomato Brand" class="brand-logo-main">
+        </div>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-item">
           <i class="fas fa-utensils stat-icon"></i>
-          <div class="stat-number">3,000,000+</div>
-          <div class="stat-label">Restaurants</div>
+          <span class="stat-number" data-target="3000000">0</span>
+          <div class="stat-label">Restaurant Partners</div>
         </div>
         <div class="stat-item">
           <i class="fas fa-map-marker-alt stat-icon"></i>
-          <div class="stat-number">800+</div>
-          <div class="stat-label">Cities</div>
+          <span class="stat-number" data-target="800">0</span>
+          <div class="stat-label">Cities Covered</div>
         </div>
         <div class="stat-item">
           <i class="fas fa-shopping-bag stat-icon"></i>
-          <div class="stat-number">3 Billion+</div>
+          <span class="stat-number" data-target="3000000000">0</span>
           <div class="stat-label">Orders Delivered</div>
         </div>
       </div>
     </section>
 
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <div class="section-header">
+        <h2>Our Services</h2>
+        <p>Experience the complete food ecosystem with Zomato's diverse range of services</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-motorcycle"></i>
+          </div>
+          <h3>Food Delivery</h3>
+          <p>Order from your favorite restaurants and get it delivered hot and fresh to your doorstep in 30 minutes or less.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-chair"></i>
+          </div>
+          <h3>Dining Out</h3>
+          <p>Discover the best restaurants in your city. Reserve tables, explore menus, and read authentic reviews from fellow food lovers.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3>Zomato Gold</h3>
+          <p>Enjoy exclusive dining privileges with complimentary dishes and drinks at premium partner restaurants across India.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- App Features Section -->
-    <section class="app-features">
-      <h2>What's waiting for you on the app?</h2>
-      <p>Our app is packed with features that enable you to experience food delivery like never before</p>
+    <section class="app-features" id="features">
+      <div class="section-header">
+        <h2>What's Waiting for You on the App?</h2>
+        <p>Our app is packed with innovative features designed to enhance your food ordering experience</p>
+      </div>
+
+      <!-- Featured Food Banner -->
+      <div class="featured-food-banner">
+        <div class="food-image-wrapper">
+          <img src="bg.avif" alt="Delicious Food Selection" class="featured-food-img">
+          <div class="food-overlay">
+            <h3>Craving Something Delicious?</h3>
+            <p>Choose from thousands of restaurants serving authentic cuisines from around the world</p>
+            <button class="btn-primary">Order Now <i class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+
       <div class="features-grid">
         <div class="feature-item">
           <div class="feature-icon"><i class="fas fa-seedling"></i></div>
@@ -618,7 +1819,7 @@
         </div>
         <div class="feature-item">
           <div class="feature-icon"><i class="fas fa-tag"></i></div>
-          <div class="feature-label">Offers</div>
+          <div class="feature-label">Exclusive Offers</div>
         </div>
         <div class="feature-item">
           <div class="feature-icon"><i class="fas fa-star"></i></div>
@@ -630,52 +1831,218 @@
         </div>
         <div class="feature-item">
           <div class="feature-icon"><i class="fas fa-users"></i></div>
-          <div class="feature-label">Plan a Party</div>
+          <div class="feature-label">Party Orders</div>
         </div>
         <div class="feature-item">
           <div class="feature-icon"><i class="fas fa-truck"></i></div>
           <div class="feature-label">Fast Delivery</div>
         </div>
       </div>
+      
       <div class="phone-mockup-container">
         <div class="phone-mockup">
-          <img src="zomato-main.png" alt="Zomato App Mockup">
+          <img src="zomato-main.png" alt="Zomato App Mockup - Main Interface">
+        </div>
+        <div class="phone-mockup secondary">
+          <img src="zomato-phone.png" alt="Zomato App Mockup - Phone View">
         </div>
         <div class="red-circle"></div>
       </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+      <div class="section-header">
+        <h2>What Our Customers Say</h2>
+        <p>Don't just take our word for it - hear from our satisfied customers</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            Zomato has become my go-to app for ordering food. The delivery is always on time, and the variety of restaurants is amazing. Love the user-friendly interface!
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PS</div>
+            <div class="author-info">
+              <h4>Priya Sharma</h4>
+              <p>Mumbai, Maharashtra</p>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            Best food delivery app in India! The live tracking feature is fantastic, and customer service is always helpful. Plus, the discounts are unbeatable!
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">RK</div>
+            <div class="author-info">
+              <h4>Rahul Kumar</h4>
+              <p>Bangalore, Karnataka</p>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            I absolutely love the restaurant recommendations and the honest reviews. It's helped me discover so many hidden gems in my city. Highly recommend!
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AM</div>
+            <div class="author-info">
+              <h4>Anita Mehta</h4>
+              <p>Delhi, NCR</p>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            Zomato Gold membership is worth every penny! The complimentary dishes at premium restaurants have saved me so much money. Great value for foodies!
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">VJ</div>
+            <div class="author-info">
+              <h4>Vikram Joshi</h4>
+              <p>Pune, Maharashtra</p>
+              <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Popular Cities Section -->
-    <section class="popular-cities">
-      <h2>Popular Cities</h2>
+    <section class="popular-cities" id="cities">
+      <div class="section-header">
+        <h2>We Serve in 800+ Cities</h2>
+        <p>From metros to tier-3 cities, bringing delicious food to your doorstep</p>
+      </div>
       <div class="cities-grid">
-        <div class="city-item">Delhi</div>
-        <div class="city-item">Mumbai</div>
-        <div class="city-item">Bangalore</div>
-        <div class="city-item">Chennai</div>
-        <div class="city-item">Kolkata</div>
+        <div class="city-item"><span>Delhi NCR</span></div>
+        <div class="city-item"><span>Mumbai</span></div>
+        <div class="city-item"><span>Bangalore</span></div>
+        <div class="city-item"><span>Chennai</span></div>
+        <div class="city-item"><span>Kolkata</span></div>
+        <div class="city-item"><span>Hyderabad</span></div>
+        <div class="city-item"><span>Pune</span></div>
+        <div class="city-item"><span>Ahmedabad</span></div>
+        <div class="city-item"><span>Jaipur</span></div>
+        <div class="city-item"><span>Lucknow</span></div>
+        <div class="city-item"><span>Chandigarh</span></div>
+        <div class="city-item"><span>Kochi</span></div>
+        <div class="city-item"><span>Indore</span></div>
+        <div class="city-item"><span>Coimbatore</span></div>
+        <div class="city-item"><span>Nagpur</span></div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="download-app">
+      <div class="cta-content">
+        <h2>Ready to Order?</h2>
+        <p>Download the Zomato app now and get exclusive offers on your first order. Join millions of food lovers across India!</p>
+        <div class="cta-buttons">
+          <a href="https://play.google.com/store/search?q=zomato&c=apps" class="btn-white" target="_blank">
+            <i class="fab fa-google-play"></i>
+            <span>Get on Google Play</span>
+          </a>
+          <a href="https://apps.apple.com/in/app/zomato-food-delivery-dining/id434613896" class="btn-white" target="_blank">
+            <i class="fab fa-apple"></i>
+            <span>Get on App Store</span>
+          </a>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <h1>Zomato</h1>
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>About Zomato</h3>
+          <ul>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Who We Are</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Blog</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Work With Us</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Investor Relations</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Report Fraud</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>For Foodies</h3>
+          <ul>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Code of Conduct</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Community</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Blogger Help</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Mobile Apps</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>For Restaurants</h3>
+          <ul>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Partner With Us</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Apps For You</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Learn More</h3>
+          <ul>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Security</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Terms</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Sitemap</a></li>
+          </ul>
+          <div class="social-links">
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          </div>
+        </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2025 Zomato. All rights reserved.
+        <p>&copy; 2025 Zomato. All rights reserved.</p>
       </div>
     </div>
   </footer>
 
+  <button class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <script>
     // DOM Elements
     const header = document.getElementById('main-header');
-    const searchInput = document.querySelector('.search-input');
-    const searchButton = document.querySelector('.search-button');
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    const backToTop = document.getElementById('backToTop');
 
-    // Debounce utility for performance optimization
+    // Debounce utility
     function debounce(func, wait) {
       let timeout;
       return function executedFunction(...args) {
@@ -690,72 +2057,290 @@
 
     // Header scroll effect
     window.addEventListener('scroll', debounce(() => {
-      header.classList.toggle('scrolled', window.scrollY > 50);
-    }, 100));
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+
+      // Back to top button
+      if (window.scrollY > 300) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    }, 50));
 
     // Toggle mobile menu
     menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
+      const icon = menuToggle.querySelector('i');
+      if (navLinks.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
     });
 
-    // Animation on scroll for sections
-    document.addEventListener('DOMContentLoaded', () => {
-      const animateOnScroll = debounce(() => {
-        const sections = document.querySelectorAll('.stats, .app-features, .popular-cities');
-        sections.forEach(section => {
-          const sectionTop = section.getBoundingClientRect().top;
-          const screenPosition = window.innerHeight / 1.3;
-          if (sectionTop < screenPosition) {
-            section.classList.add('animate');
+    // Close mobile menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 80;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Back to top button
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Animated Counter for Stats
+    const statsSection = document.querySelector('.stats');
+    let hasAnimated = false;
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !hasAnimated) {
+          animateCounters();
+          hasAnimated = true;
+        }
+      });
+    }, observerOptions);
+
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
+
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+
+        const updateCounter = () => {
+          current += increment;
+          if (current < target) {
+            if (target >= 1000000000) {
+              counter.textContent = Math.floor(current / 1000000000) + ' Billion+';
+            } else if (target >= 1000000) {
+              counter.textContent = Math.floor(current / 1000000) + 'M+';
+            } else {
+              counter.textContent = Math.floor(current) + '+';
+            }
+            requestAnimationFrame(updateCounter);
+          } else {
+            if (target >= 1000000000) {
+              counter.textContent = '3 Billion+';
+            } else if (target >= 1000000) {
+              counter.textContent = '3,000,000+';
+            } else {
+              counter.textContent = target + '+';
+            }
+          }
+        };
+
+        updateCounter();
+      });
+    }
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchButton = document.querySelector('.search-button');
+
+    searchButton.addEventListener('click', () => {
+      const location = searchInput.value.trim();
+      if (location) {
+        // Create a ripple effect
+        const ripple = document.createElement('span');
+        ripple.style.cssText = `
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          background: rgba(255, 255, 255, 0.5);
+          border-radius: 50%;
+          transform: scale(0);
+          animation: ripple 0.6s ease-out;
+          pointer-events: none;
+        `;
+        searchButton.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 600);
+        
+        alert(`🍕 Searching for restaurants in ${location}...`);
+      } else {
+        searchInput.style.animation = 'shake 0.5s';
+        setTimeout(() => searchInput.style.animation = '', 500);
+        alert('Please enter a location');
+      }
+    });
+
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        searchButton.click();
+      }
+    });
+
+    // Add shake animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+      }
+      @keyframes ripple {
+        to {
+          transform: scale(20);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Add hover effect to city items
+    document.querySelectorAll('.city-item').forEach(city => {
+      city.addEventListener('click', () => {
+        const cityName = city.querySelector('span').textContent;
+        city.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          city.style.transform = '';
+          alert(`🌆 Explore restaurants in ${cityName}`);
+        }, 100);
+      });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroVideo = document.querySelector('.hero-video');
+      if (heroVideo) {
+        heroVideo.style.transform = `translate(-50%, -50%) scale(${1 + scrolled * 0.0002})`;
+      }
+    });
+
+    // Add click effect to service cards
+    document.querySelectorAll('.service-card, .feature-item, .stat-item').forEach(card => {
+      card.addEventListener('click', function() {
+        this.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 200);
+      });
+    });
+
+    // Console welcome message
+    console.log('%c🍕 Welcome to Zomato! 🍔', 'font-size: 24px; color: #e23744; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);');
+    console.log('%cOrder food from your favorite restaurants', 'font-size: 16px; color: #696969;');
+    
+    // Easter egg - Konami code
+    let konamiCode = [];
+    const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    
+    document.addEventListener('keydown', (e) => {
+      konamiCode.push(e.key);
+      konamiCode = konamiCode.slice(-10);
+      
+      if (konamiCode.join(',') === konamiSequence.join(',')) {
+        alert('🎉 Congratulations! You found the secret code! Enjoy 50% off your next order! 🍕');
+        document.body.style.animation = 'rainbow 2s ease infinite';
+      }
+    });
+
+    // Rainbow animation for easter egg
+    const rainbowStyle = document.createElement('style');
+    rainbowStyle.textContent = `
+      @keyframes rainbow {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(rainbowStyle);
+
+    // Lazy loading for images
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+              observer.unobserve(img);
+            }
           }
         });
-      }, 100);
+      });
 
-      animateOnScroll();
-      window.addEventListener('scroll', animateOnScroll);
-    });
-
-    // Back-to-top button
-    const backToTop = document.createElement('button');
-    backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    backToTop.style.cssText = `
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-      display: none;
-      z-index: 1000;
-    `;
-    document.body.appendChild(backToTop);
-
-    backToTop.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
-    window.addEventListener('scroll', () => {
-      backToTop.style.display = window.scrollY > 200 ? 'block' : 'none';
-    });
-
-    // Dynamic current time display
-    function updateTime() {
-      const now = new Date();
-      const options = {
-        timeZone: 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true
-      };
-      const timeString = now.toLocaleTimeString('en-US', options);
-      console.log(`Current Time: ${timeString} IST`);
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
     }
-    setInterval(updateTime, 1000);
-    updateTime(); // Initial call
+
+    // Add loading state to buttons
+    document.querySelectorAll('.btn-primary, .btn-white').forEach(btn => {
+      if (!btn.href || btn.href.includes('#')) {
+        btn.addEventListener('click', function(e) {
+          if (!this.classList.contains('loading')) {
+            e.preventDefault();
+            this.classList.add('loading');
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+            
+            setTimeout(() => {
+              this.classList.remove('loading');
+              this.innerHTML = originalText;
+            }, 1500);
+          }
+        });
+      }
+    });
   </script>
 </body>
 </html>
